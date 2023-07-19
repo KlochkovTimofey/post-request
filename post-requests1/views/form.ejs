@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Form</title>
+</head>
+
+<body>
+    <h1>Анкета</h1>
+
+    <form action="" method="POST">
+        <p>
+            <label for="name-id">Имя</label>
+            <input required type="text" id="name-id" name="name" value="<%= name %>">
+            <span class="error"></span>
+            <!-- maxlength="20" minlength="4" -->
+        </p>
+
+        <p>
+            <label for="age-id">Возраст</label>
+            <input required type="number" id="age-id" name="age" value="<%= age %>">
+            <span class="error"></span>
+            <!-- max="150" min="0" -->
+        </p>
+
+        <p>
+            <label for="birth-id">Дата рождения</label>
+            <input required type="date" id="birth-id" name="birth">
+            <span class="error"></span>
+        </p>
+
+        <p>
+            <label for="lang-id">Язык программирования</label>
+            <select name="lang" id="lang-id">
+                <option value="JS">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="cPlusPlus">C++</option>
+            </select>
+        </p>
+
+        <button>Отправить</button>
+    </form>
+
+    <script>
+        const errors = JSON.parse('<%= errors %>'.replaceAll("&#34;", '"'));
+        console.log(errors);
+
+        let inputs = document.querySelectorAll("input")
+        inputs.forEach((input) => {
+            errors.forEach((error) => {
+                if (input.name == error.name) {
+                    input.style.borderColor = "red";
+                    input.nextElementSibling.innerHTML = error.message;
+                }
+                
+            })
+        });
+    </script>
+
+</body>
+
+</html>
